@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     .replace(/(\d.)/gm, "-")
     .split("-");
 
-  console.log(chatGptResponse);
+  console.log("response", data.choices[0].message.content);
 
   return NextResponse.json({
     body: chatGptResponse.splice(1),

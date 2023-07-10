@@ -11,6 +11,11 @@ function Home() {
   const [data, setData] = useState<any>(null);
 
   useEffect(() => {
+    // @ts-ignore
+    import("bootstrap/dist/js/bootstrap");
+  }, []);
+
+  useEffect(() => {
     if (country) {
       setLoading(true);
       fetch(`/api/chat?country=${country}`)
@@ -42,7 +47,7 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="span4">
-            <img className={styles.centerblock} src="/travelistLogo.png" />   
+            <img className={styles.centerblock} src="/travelistLogo.png" />
           </div>
         </div>
       </div>
@@ -71,20 +76,102 @@ function Home() {
         </div>
       </div>
       <br />
-      <div className="card">
-        {/* {isLoading && <div>Loading...</div>} */}
-        {isLoading && 
+      {/* {isLoading && <div>Loading...</div>} */}
+      {isLoading && (
         <div>
           {/* <img className={styles.spinnerLogo} src="/travelistLogo.png" />    */}
-          <img className={styles.spinner} src="/spinner.gif" alt="Loading2 ..." />
+          <img
+            className={styles.spinner}
+            src="/spinner.gif"
+            alt="Loading2 ..."
+          />
         </div>
-        }
-        {!isLoading &&
-          data &&
-          data.body.map((content: any, index: number) => {
-            return <HomeData content={content} />;
-          })}
-      </div>
+      )}
+      {!isLoading && data && (
+        <div
+          className="accordion"
+          style={{
+            width: "100%",
+          }}
+          id="accordionExample"
+        >
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="headingOne">
+              <button
+                className="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mustKnows"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Must Knows in {country}
+              </button>
+            </h2>
+
+            <div
+              id="mustKnows"
+              className="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample"
+            >
+              <div className="accordion-body">
+                <div className="card">
+                  {!isLoading &&
+                    data &&
+                    data.body.map((content: any, index: number) => {
+                      return <HomeData content={content} />;
+                    })}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="headingTwo">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#activities"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Must Try Activities in {country}
+              </button>
+            </h2>
+            <div
+              id="activities"
+              className="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample"
+            >
+              <div className="accordion-body">Activities</div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="headingTwo">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#foods"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Must try foods in {country}
+              </button>
+            </h2>
+            <div
+              id="foods"
+              className="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample"
+            >
+              <div className="accordion-body">Foods</div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
