@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       { role: "system", content: "" },
       {
         role: "user",
-        content: `top 5 Things I wish I've know before going to ${country}${
+        content: `top 5 Popular Foods To try in ${country}${
           hints && " with my " + hints
         } that is easy to digest`,
       },

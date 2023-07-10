@@ -2,31 +2,21 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import "bootstrap/dist/css/bootstrap.css";
-import HomeData from "./HomeData";
+import dynamic from "next/dynamic";
+
+const MustKnowsDynamic = dynamic(() => import("./collapse/MustKnows"));
+const ActivitiesDynamic = dynamic(() => import("./collapse/Activities"));
+const FoodsDynamic = dynamic(() => import("./collapse/Foods"));
 
 function Home() {
   const [country, setCountry] = useState<string | undefined>("");
   const [hints, setHints] = useState<string | undefined>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     // @ts-ignore
     import("bootstrap/dist/js/bootstrap");
   }, []);
-
-  useEffect(() => {
-    if (country) {
-      setLoading(true);
-      fetch(`/api/chat?country=${country}&hints=${hints}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-          setLoading(false);
-        });
-    }
-  }, [country, hints]);
 
   const fetchChatGptResult = () => {
     const inputVal = inputRef.current?.value.trim();
@@ -72,7 +62,6 @@ function Home() {
           </div>
           <div className="col-md-2">
             <button
-              disabled={isLoading}
               onClick={() => fetchChatGptResult()}
               type="button"
               className="btn btn-primary"
@@ -82,47 +71,38 @@ function Home() {
           </div>
         </div>
         <br />
-        <div className="row" hidden={!isLoading}>
-          <div className="col-md-4"></div>
-          <div className="col-md-5 d-flex justify-content-between">
-            <button
-              onClick={() => populateHints("with my family")}
-              type="button"
-              className="btn btn-outline-primary"
-            >
-              Family Trip
-            </button>
-            <button
-              onClick={() => populateHints("with my love ones")}
-              type="button"
-              data-hint="love"
-              className="btn btn-outline-primary"
-            >
-              Romantic Getaway
-            </button>
-            <button
-              onClick={() => populateHints("with my friend")}
-              type="button"
-              className="btn btn-outline-primary"
-            >
-              Travel with Friends
-            </button>
+        {country && (
+          <div className="row">
+            <div className="col-md-4"></div>
+            <div className="col-md-5 d-flex justify-content-between">
+              <button
+                onClick={() => populateHints("family")}
+                type="button"
+                className="btn btn-outline-primary"
+              >
+                Family Trip
+              </button>
+              <button
+                onClick={() => populateHints("Loved ones")}
+                type="button"
+                data-hint="love"
+                className="btn btn-outline-primary"
+              >
+                Romantic Getaway
+              </button>
+              <button
+                onClick={() => populateHints("friends")}
+                type="button"
+                className="btn btn-outline-primary"
+              >
+                Travel with Friends
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <br />
-      {/* {isLoading && <div>Loading...</div>} */}
-      {isLoading && (
-        <div>
-          {/* <img className={styles.spinnerLogo} src="/travelistLogo.png" />    */}
-          <img
-            className={styles.spinner}
-            src="/spinner.gif"
-            alt="Loading2 ..."
-          />
-        </div>
-      )}
-      {!isLoading && data && (
+      {country && (
         <div
           className="accordion"
           style={{
@@ -130,81 +110,15 @@ function Home() {
           }}
           id="accordionExample"
         >
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingOne">
-              <button
-                className="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#mustKnows"
-                aria-expanded="true"
-                aria-controls="collapseOne"
-              >
-                Must Knows in {country}
-              </button>
-            </h2>
-
-            <div
-              id="mustKnows"
-              className="accordion-collapse collapse show"
-              aria-labelledby="headingOne"
-              data-bs-parent="#accordionExample"
-            >
-              <div className="accordion-body">
-                <div className="card">
-                  {!isLoading &&
-                    data &&
-                    data.body.map((content: any, index: number) => {
-                      return <HomeData content={content} />;
-                    })}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingTwo">
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#activities"
-                aria-expanded="false"
-                aria-controls="collapseTwo"
-              >
-                Must Try Activities in {country}
-              </button>
-            </h2>
-            <div
-              id="activities"
-              className="accordion-collapse collapse"
-              aria-labelledby="headingTwo"
-              data-bs-parent="#accordionExample"
-            >
-              <div className="accordion-body">Activities</div>
-            </div>
-          </div>
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingTwo">
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#foods"
-                aria-expanded="false"
-                aria-controls="collapseTwo"
-              >
-                Must try foods in {country}
-              </button>
-            </h2>
-            <div
-              id="foods"
-              className="accordion-collapse collapse"
-              aria-labelledby="headingTwo"
-              data-bs-parent="#accordionExample"
-            >
-              <div className="accordion-body">Foods</div>
-            </div>
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <MustKnowsDynamic country={country} hints={hints} />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ActivitiesDynamic country={country} hints={hints} />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <FoodsDynamic country={country} hints={hints} />
+          </Suspense>
         </div>
       )}
     </main>
