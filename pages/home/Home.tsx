@@ -42,7 +42,7 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="span4">
-            <img className={styles.centerblock} src="/travelistLogo2.png" />
+            <img className={styles.centerblock} src="/travelistLogo.png" />   
           </div>
         </div>
       </div>
@@ -72,7 +72,13 @@ function Home() {
       </div>
       <br />
       <div className="card">
-        {isLoading && <div>Loading...</div>}
+        {/* {isLoading && <div>Loading...</div>} */}
+        {isLoading && 
+        <div>
+          {/* <img className={styles.spinnerLogo} src="/travelistLogo.png" />    */}
+          <img className={styles.spinner} src="/spinner.gif" alt="Loading2 ..." />
+        </div>
+        }
         {!isLoading &&
           data &&
           data.body.map((content: any, index: number) => {
