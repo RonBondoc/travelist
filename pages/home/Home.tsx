@@ -42,7 +42,7 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="span4">
-            <img className={styles.centerblock} src="/travelistLogo.png" />   
+            <img className={styles.centerblock} src="/travelistLogo.png" />
           </div>
         </div>
       </div>
@@ -69,15 +69,37 @@ function Home() {
             </button>
           </div>
         </div>
+        <br/>
+        <div className="row" hidden={!isLoading}>
+        <div className="col-md-4"></div>
+          <div className="col-md-5 d-flex justify-content-between">
+            <button
+              onClick={() => fetchChatGptResult()}
+              type="button"
+              className="btn btn-outline-primary ml-1"
+            >Family Trip
+            </button>
+            <button
+              onClick={() => fetchChatGptResult()}
+              type="button"
+              className="btn btn-outline-primary"
+            >Romantic Getaway
+            </button>
+            <button
+              onClick={() => fetchChatGptResult()}
+              type="button"
+              className="btn btn-outline-primary"
+            >Travel with Friends
+            </button>
+          </div>
+        </div>
       </div>
       <br />
       <div className="card">
-        {/* {isLoading && <div>Loading...</div>} */}
-        {isLoading && 
-        <div>
-          {/* <img className={styles.spinnerLogo} src="/travelistLogo.png" />    */}
-          <img className={styles.spinner} src="/spinner.gif" alt="Loading2 ..." />
-        </div>
+        {isLoading &&
+          <div>
+            <img className={styles.spinner} src="/spinner.gif" alt="Loading2 ..." />
+          </div>
         }
         {!isLoading &&
           data &&
