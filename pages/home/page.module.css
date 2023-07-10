@@ -236,3 +236,20 @@
     transform: rotate(0deg);
   }
 }
+
+.spinner {
+  width: auto; 
+  height: auto;  
+  position: 'absolute';
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: -1;
+}
+.spinnerLogo {
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
+  position: 'relative';
+  z-index: -1;
+}
