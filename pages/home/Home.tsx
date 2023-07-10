@@ -95,7 +95,6 @@ function Home() {
             <button
               onClick={() => populateHints("with my love ones")}
               type="button"
-              data-hint="love"
               className="btn btn-outline-primary"
             >
               Romantic Getaway
