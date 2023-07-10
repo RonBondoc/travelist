@@ -8,6 +8,7 @@ function replacer(key: string, value: string) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const country = searchParams.get("country");
+  const hints = searchParams.get("hints") || undefined;
 
   const requestBody = {
     model: "gpt-3.5-turbo",
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
       { role: "system", content: "" },
       {
         role: "user",
-        content: `top 5 Things I wish I've know before going to ${country} that is easy to digest`,
+        content: `top 5 Things I wish I've know before going to ${country}${hints && " with my "+hints} that is easy to digest`,
       },
     ],
   };

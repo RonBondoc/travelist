@@ -6,6 +6,7 @@ import HomeData from "./HomeData";
 
 function Home() {
   const [country, setCountry] = useState<string | undefined>("");
+  const [hints, setHints] = useState<string | undefined>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
@@ -13,7 +14,7 @@ function Home() {
   useEffect(() => {
     if (country) {
       setLoading(true);
-      fetch(`/api/chat?country=${country}`)
+      fetch(`/api/chat?country=${country}&hints=${hints}`)
         .then((res) => res.json())
         .then((data) => {
           setData(data);
@@ -36,6 +37,12 @@ function Home() {
       return;
     }
   };
+
+  const populateHints = (val : string) => {
+    console.log(val);
+    setHints(val);
+    return;
+  }
 
   return (
     <main className={styles.main}>
@@ -74,19 +81,20 @@ function Home() {
         <div className="col-md-4"></div>
           <div className="col-md-5 d-flex justify-content-between">
             <button
-              onClick={() => fetchChatGptResult()}
+              onClick={() => populateHints("with my family")}
               type="button"
-              className="btn btn-outline-primary ml-1"
+              className="btn btn-outline-primary"
             >Family Trip
             </button>
             <button
-              onClick={() => fetchChatGptResult()}
+              onClick={() => populateHints("with my love ones")}
               type="button"
+              data-hint="love"
               className="btn btn-outline-primary"
             >Romantic Getaway
             </button>
             <button
-              onClick={() => fetchChatGptResult()}
+              onClick={() => populateHints("with my friend")}
               type="button"
               className="btn btn-outline-primary"
             >Travel with Friends
