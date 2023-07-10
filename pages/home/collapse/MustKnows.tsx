@@ -43,7 +43,7 @@ function MustKnows({ country, hints }: CollapseProps) {
             aria-expanded="true"
             aria-controls="collapseOne"
           >
-            Top 5 I wish I knew before going in {country}
+            5 things to know before going to the {country}
           </button>
         </h2>
 

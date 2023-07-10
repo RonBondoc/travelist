@@ -43,7 +43,7 @@ function Foods({ country, hints }: CollapseProps) {
             aria-expanded="false"
             aria-controls="foodsCollapse"
           >
-            Top 5 Foods in {countryString}
+            5 must try food in {countryString}
           </button>
         </h2>
 

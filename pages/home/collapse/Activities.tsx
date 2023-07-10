@@ -43,7 +43,7 @@ function Activities({ country, hints }: CollapseProps) {
             aria-expanded="false"
             aria-controls="acitivitiesCollapse"
           >
-            Top 5 Activities in {countryString}
+            5 activities you should not miss in the {countryString}
           </button>
         </h2>
 
