@@ -38,7 +38,7 @@ function Home() {
     }
   };
 
-  const populateHints = (val : string) => {
+  const populateHints = (val: string) => {
     console.log(val);
     setHints(val);
     return;
@@ -76,9 +76,9 @@ function Home() {
             </button>
           </div>
         </div>
-        <br/>
+        <br />
         <div className="row" hidden={!isLoading}>
-        <div className="col-md-4"></div>
+          <div className="col-md-4"></div>
           <div className="col-md-5 d-flex justify-content-between">
             <button
               onClick={() => populateHints("with my family")}
@@ -89,7 +89,6 @@ function Home() {
             <button
               onClick={() => populateHints("with my love ones")}
               type="button"
-              data-hint="love"
               className="btn btn-outline-primary"
             >Romantic Getaway
             </button>
